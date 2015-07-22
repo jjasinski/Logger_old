@@ -1,0 +1,16 @@
+echo off
+
+SET SANDBOX=%CD%
+SET CMAKE_PATH=%SANDBOX%/BuildPlatform/tools/cmake
+SET CMAKE_ROOT=%CMAKE_PATH%/cmake
+SET PATH=%PATH%;%CMAKE_PATH%/bin
+
+SET BUILD_PATH=build_win64
+
+IF NOT EXIST %BUILD_PATH% mkdir %BUILD_PATH%
+
+cd %BUILD_PATH%
+
+cmake -G"Visual Studio 12 Win64" %SANDBOX%
+
+cd %SANDBOX%
