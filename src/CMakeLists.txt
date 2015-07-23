@@ -15,5 +15,5 @@ source_group ("Source Files\\logger" FILES ${logger_sources})
 
 include_directories (.)
 
-add_executable (${PROJECT_NAME} ${test_main})
+add_executable (${PROJECT_NAME} ${test_main} ${logger_headers} ${logger_sources})
 #add_library (${PROJECT_NAME} ${headers} ${logger_headers} ${logger_sources})
