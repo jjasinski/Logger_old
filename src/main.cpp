@@ -1,6 +1,7 @@
 #include <memory>
 #include <string>
 #include <map>
+//#include <
 
 //#include "logger/CallInfo.hpp"
 //#include "logger/Message.hpp"
@@ -79,6 +80,8 @@ void main()
 
     // usage
     logger->debug(LOGGER_CALL_INFO);
+    logger->debug(LOGGER_CALL_INFO, "simple message");
+    logger->debug(LOGGER_CALL_INFO, "complex message: %s", "ala ma kota");
 
 
     //auto logger2 = logger::registry()->getLogger("");

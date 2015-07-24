@@ -31,13 +31,15 @@ namespace logger
     //void error();
     //void warning();
     //void info();
-    void debug(const CallInfo& anInfo)
+
+    template<typename... Args>
+    void debug(const CallInfo& anInfo, const Args&... args)
     {
       if (loggingLevel >= MessageLevel::DEBUG)
       {
         if (auto message = messageService->createMessage(MessageLevel::DEBUG, anInfo))
         {
-          message->content = "";//TODO
+          message->content = makeString(args...);
           messageService->writeMessage(std::move(message));
         }
       }

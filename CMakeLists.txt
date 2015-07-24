@@ -24,7 +24,5 @@ SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 message (STATUS "--- BuildPlatform ---")
 #add_subdirectory (BuildPlatform)
 
-#message (STATUS "--- libextern ---")
-#add_subdirectory (libextern)
-
 add_subdirectory (src)
+add_subdirectory (examples)
