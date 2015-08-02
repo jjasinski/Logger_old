@@ -57,8 +57,8 @@ std::shared_ptr< logger::Logger > getLogger()
   return logger;
 }
 
-#define LOG_DEBUG(...) { getLogger()->debug(LOGGER_CALL_INFO, __VA_ARGS__);}
-
+#define LOG_DEBUG(...) { getLogger()->debug(LOGGER_CALL_INFO, __VA_ARGS__); }
+#define LOG_ERROR(...) { getLogger()->error(LOGGER_CALL_INFO, __VA_ARGS__); }
 int main()
 {
   // check logger performance for 'NULL configuration'
@@ -73,7 +73,8 @@ int main()
   const auto COUNT = 100; // a hundred million
   for (auto i = 0; i < COUNT; ++i)
   {
-    LOG_DEBUG("line: %d", i);
+    LOG_DEBUG("debug message no: %d", i);
+    LOG_ERROR("error message no: %d", i);
   }
   messageService->flush();
   auto end = std::chrono::high_resolution_clock::now();

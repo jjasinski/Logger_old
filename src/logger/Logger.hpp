@@ -25,27 +25,66 @@ namespace logger
 
     const std::string name;
 
+    template<typename... Args>
+    void fatal(const CallInfo& anInfo, const Args&... args)
+    {
+      writeNewMessage(MessageLevel::FATAL, anInfo, args...);
+    }
+    
+    template<typename... Args>
+    void error(const CallInfo& anInfo, const Args&... args)
+    {
+      writeNewMessage(MessageLevel::ERROR, anInfo, args...);
+    }
+    
+    template<typename... Args>
+    void warning(const CallInfo& anInfo, const Args&... args)
+    {
+      writeNewMessage(MessageLevel::ERROR, anInfo, args...);
+    }
 
-
-    //void fatal();
-    //void error();
-    //void warning();
-    //void info();
+    template<typename... Args>
+    void info(const CallInfo& anInfo, const Args&... args)
+    {
+      writeNewMessage(MessageLevel::INFO, anInfo, args...);
+    }
 
     template<typename... Args>
     void debug(const CallInfo& anInfo, const Args&... args)
     {
-      if (loggingLevel >= MessageLevel::DEBUG)
-      {
-        if (auto message = messageService->createMessage(MessageLevel::DEBUG, anInfo))
-        {
-          message->content = makeString(args...);
-          messageService->writeMessage(std::move(message));
-        }
-      }
+      writeNewMessage(MessageLevel::DEBUG, anInfo, args...);
     }
-    //void trace();
-    //void trivial();
+
+    template<typename... Args>
+    void debugFine(const CallInfo& anInfo, const Args&... args)
+    {
+      writeNewMessage(MessageLevel::DEBUG_FINE, anInfo, args...);
+    }
+
+    template<typename... Args>
+    void debugFiner(const CallInfo& anInfo, const Args&... args)
+    {
+      writeNewMessage(MessageLevel::DEBUG_FINER, anInfo, args...);
+    }
+
+    template<typename... Args>
+    void debugFinest(const CallInfo& anInfo, const Args&... args)
+    {
+      writeNewMessage(MessageLevel::DEBUG_FINEST, anInfo, args...);
+    }
+
+    template<typename... Args>
+    void trace(const CallInfo& anInfo, const Args&... args)
+    {
+      writeNewMessage(MessageLevel::TRACE, anInfo, args...);
+    }
+
+    template<typename... Args>
+    void trivial(const CallInfo& anInfo, const Args&... args)
+    {
+      writeNewMessage(MessageLevel::TRIVIAL, anInfo, args...);
+    }
+
     MessageLevel getLevel() const { return loggingLevel; }
     void setLevel(MessageLevel aLevel) { loggingLevel = aLevel; }
 
@@ -54,6 +93,19 @@ namespace logger
   private:
     MessageLevel loggingLevel;
     MessageServicePtr messageService;
+
+    template<typename... Args>
+    void writeNewMessage(const MessageLevel aLevel, const CallInfo& anInfo, const Args&... args)
+    {
+      if (loggingLevel >= aLevel)
+      {
+        if (auto message = messageService->createMessage(aLevel, anInfo))
+        {
+          message->content = makeString(args...);
+          messageService->writeMessage(std::move(message));
+        }
+      }
+    }
   };
 
   ///**
